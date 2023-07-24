@@ -29,7 +29,7 @@ const uploadImage = async (req, res) => {
 // Controller to fetch all images from the database
 const getImages = async (req, res) => {
   try {
-    const images = await Image.find({}, { _id: 1, imageUrl: 1 });
+    const images = await Image.find({}, { _id: 1, imageUrl: 1, liked:1 });
 
     return res.json({ images });
   } catch (error) {
