@@ -73,6 +73,39 @@ const toggleLike = async (req, res) => {
   }
 };
 
+// Function to handle adding an image to an album
+const handleAddToAlbum = async (req, res) => {
+    try {
+        console.log(req.params);
+        console.log("req.body", req.body);
+      const imageId = req.params.id; // Assuming the image ID is passed in the request parameters
+      const albumName = req.body.albumName; // Assuming the album name is passed in the request body
+  
+      // Find the image in the database by ID
+      const image = await Image.findById(imageId);
+  
+      if (!image) {
+        return res.status(404).json({ error: 'Image not found' });
+      }
+  
+      // Check if the album name is already present in the image's album array
+      if (!image.album.includes(albumName)) {
+        // If the album name is not already present, add it to the array
+        image.album.push(albumName);
+      }
+  
+      // Save the updated image document in the database
+      await image.save();
+  
+      return res.json({ success: true });
+    } catch (error) {
+      console.error('Error adding image to album:', error);
+      return res.status(500).json({ error: 'Failed to add image to album' });
+    }
+  };
 
 
-module.exports = { uploadImage, getImages, toggleLike, getLikedImages };
+
+  
+
+module.exports = { uploadImage, getImages, toggleLike, getLikedImages, handleAddToAlbum };

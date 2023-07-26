@@ -9,9 +9,13 @@ const imageSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  liked:{
-    type:Boolean,
+  liked: {
+    type: Boolean,
     default: false,
+  },
+  album: {
+    type: [String], // Array of strings representing the album names
+    default: [], // By default, the image is not added to any album
   },
   // Timestamps to track creation and update times
   createdAt: {
